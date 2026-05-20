@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🍔 Expresso Burger</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#111;
+    color:white;
+}
+
+/* TOPO */
+
+header{
+    background: linear-gradient(90deg,#ff3c00,#ff9900);
+    padding:20px;
+    position:sticky;
+    top:0;
+    z-index:999;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.carrinho{
+    background:white;
+    color:#111;
+    padding:10px 18px;
+    border-radius:50px;
+    font-weight:bold;
+}
+
+/* BANNER */
+
+.banner{
+    width:100%;
+    padding:50px 20px;
+    text-align:center;
+    background:
+    linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200');
+    background-size:cover;
+    background-position:center;
+}
+
+.banner h1{
+    font-size:42px;
+    margin-bottom:15px;
+    color:#ff9900;
+}
+
+.banner p{
+    max-width:700px;
+    margin:auto;
+    font-size:18px;
+    line-height:1.6;
+    color:#ddd;
+}
+
+/* CONTAINER */
+
+.container{
+    width:92%;
+    max-width:1300px;
+    margin:auto;
+    padding:35px 0;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+/* CARD */
+
+.card{
+    background:#1d1d1d;
+    border-radius:20px;
+    overflow:hidden;
+    transition:0.3s;
+    border:1px solid #2b2b2b;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 20px rgba(255,153,0,0.3);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.preco{
+    color:#ff9900;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.add{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#ff3c00,#ff9900);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* TÍTULOS */
+
+.titulo{
+    margin-top:50px;
+    margin-bottom:25px;
+    color:#ff9900;
+    text-align:center;
+    font-size:38px;
+}
+
+/* TOTAL */
+
+.total{
+    margin-top:35px;
+    text-align:center;
+    font-size:30px;
+    color:#ff9900;
+    font-weight:bold;
+}
+
+/* FORM */
+
+.form-box{
+    margin-top:40px;
+    background:#1d1d1d;
+    padding:30px;
+    border-radius:20px;
+}
+
+.form-box h2{
+    margin-bottom:20px;
+    color:#ff9900;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    border:none;
+    border-radius:12px;
+    background:#2a2a2a;
+    color:white;
+}
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+.pagamento-info{
+    margin-top:15px;
+    background:#2a2a2a;
+    padding:15px;
+    border-radius:12px;
+    color:#ffcc80;
+    line-height:1.5;
+}
+
+.finalizar{
+    width:100%;
+    margin-top:20px;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#00c853,#64dd17);
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+🍔 Expresso Burger
+</div>
+
+<div class="carrinho">
+🛒 <span id="contador">0</span>
+</div>
+
+</header>
+
+<!-- BANNER -->
+
+<div class="banner">
+
+<h1>
+Bem-vindo ao Expresso Burger 🍔
+</h1>
+
+<p>
+Os melhores hambúrgueres, pizzas,
+batatas e bebidas da cidade!
+</p>
+
+</div>
+
+<div class="container">
+
+<!-- CARDÁPIO -->
+
+<div class="grid">
+
+<!-- 1 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800">
+<div class="card-content">
+<h3>Smash Australiano</h3>
+<div class="preco">R$ 22,90</div>
+<button class="add"
+onclick="adicionar('Smash Australiano',22.90)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 2 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800">
+<div class="card-content">
+<h3>X-Bacon Cheddar</h3>
+<div class="preco">R$ 25,00</div>
+<button class="add"
+onclick="adicionar('X-Bacon Cheddar',25)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 3 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800">
+<div class="card-content">
+<h3>X-Tudo Especial</h3>
+<div class="preco">R$ 29,90</div>
+<button class="add"
+onclick="adicionar('X-Tudo Especial',29.90)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 4 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=800">
+<div class="card-content">
+<h3>Onion Rings</h3>
+<div class="preco">R$ 14,90</div>
+<button class="add"
+onclick="adicionar('Onion Rings',14.90)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 5 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800">
+<div class="card-content">
+<h3>Pizza Marguerita</h3>
+<div class="preco">R$ 35,00</div>
+<button class="add"
+onclick="adicionar('Pizza Marguerita',35)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 6 -->
+
+<div class="card">
+<img src="https://www.receitasdemae.com.br/wp-content/uploads/2022/02/Pizza-de-calabresa.jpg">
+<div class="card-content">
+<h3>Pizza Calabresa</h3>
+<div class="preco">R$ 39,90</div>
+<button class="add"
+onclick="adicionar('Pizza Calabresa',39.90)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 7 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800">
+<div class="card-content">
+<h3>Batata com Cheddar</h3>
+<div class="preco">R$ 16,00</div>
+<button class="add"
+onclick="adicionar('Batata com Cheddar',16)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 8 -->
+
+<div class="card">
+<img src="https://www.oetker.com.br/assets/recipes/assets/786b185037aa4d6aae33f838ee5e7ef9/1272x764/milk-shake-de-chocolate.jpg">
+<div class="card-content">
+<h3>Milkshake Chocolate</h3>
+<div class="preco">R$ 15,00</div>
+<button class="add"
+onclick="adicionar('Milkshake Chocolate',15)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 9 -->
+
+<div class="card">
+<img src="https://media.istockphoto.com/id/487787108/pt/foto/lata-de-coca-cola-com-gelo.jpg?s=612x612&w=0&k=20&c=wtS_gNnZgtiObkcfletaXuFztzy6HXRBTpoa6X3UzzM=">
+<div class="card-content">
+<h3>Coca-Cola Lata</h3>
+<div class="preco">R$ 6,00</div>
+<button class="add"
+onclick="adicionar('Coca-Cola Lata',6)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 10 -->
+
+<div class="card">
+<img src="https://acdn-us.mitiendanube.com/stores/001/043/122/products/3572_secundario-381f6343f08ffa606e17745581390942-1024-1024.webp">
+<div class="card-content">
+<h3>Guaraná Antarctica</h3>
+<div class="preco">R$ 6,50</div>
+<button class="add"
+onclick="adicionar('Guaraná Antarctica',6.50)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 11 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800">
+<div class="card-content">
+<h3>Suco Natural</h3>
+<div class="preco">R$ 8,50</div>
+<button class="add"
+onclick="adicionar('Suco Natural',8.50)">
+Adicionar
+</button>
+</div>
+</div>
+
+<!-- 12 -->
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800">
+<div class="card-content">
+<h3>Água Mineral</h3>
+<div class="preco">R$ 4,00</div>
+<button class="add"
+onclick="adicionar('Água Mineral',4)">
+Adicionar
+</button>
+</div>
+</div>
+
+</div>
+
+<!-- COMBOS -->
+
+<h2 class="titulo">
+🔥 Combos Promocionais 🔥
+</h2>
+
+<div class="grid">
+
+<!-- COMBO 1 -->
+
+<div class="card">
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBUAIGVobTaVdxsI0AoCBJ8w17uno1_y8l4Q&s">
+
+<div class="card-content">
+
+<h3>Combo Casal</h3>
+
+<p style="margin-bottom:10px;color:#ccc;">
+2 Smash Australiano + 2 Coca-Cola + Batata
+</p>
+
+<div class="preco">
+R$ 59,90
+</div>
+
+<button class="add"
+onclick="adicionar('Combo Casal',59.90)">
+Adicionar
+</button>
+
+</div>
+
+</div>
+
+<!-- COMBO 2 -->
+
+<div class="card">
+
+<img src="https://alloydeliveryimages.s3.sa-east-1.amazonaws.com/item_images/9532/697e829d427bbuird6.webp">
+
+<div class="card-content">
+
+<h3>Combo Família</h3>
+
+<p style="margin-bottom:10px;color:#ccc;">
+2 Pizzas + Refrigerante 2L
+</p>
+
+<div class="preco">
+R$ 89,90
+</div>
+
+<button class="add"
+onclick="adicionar('Combo Família',89.90)">
+Adicionar
+</button>
+
+</div>
+
+</div>
+
+<!-- COMBO 3 -->
+
+<div class="card">
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfr6LJ8Ncm8Qp8ok4S-oBQdUyqhcEqKR4ciA&s">
+
+<div class="card-content">
+
+<h3>Combo Explosão</h3>
+
+<p style="margin-bottom:10px;color:#ccc;">
+X-Bacon + Batata Cheddar + Milkshake Chocolate
+</p>
+
+<div class="preco">
+R$ 42,90
+</div>
+
+<button class="add"
+onclick="adicionar('Combo Explosão',42.90)">
+Adicionar
+</button>
+
+</div>
+
+</div>
+
+<!-- COMBO 4 -->
+
+<div class="card">
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSvqcKCRLKA45xSwuNo3n1MiA87LtCp4iIGA&s">
+
+<div class="card-content">
+
+<h3>Combo Pizza Night</h3>
+
+<p style="margin-bottom:10px;color:#ccc;">
+Pizza Marguerita + Guaraná Antarctica + Onion Rings
+</p>
+
+<div class="preco">
+R$ 54,90
+</div>
+
+<button class="add"
+onclick="adicionar('Combo Pizza Night',54.90)">
+Adicionar
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TOTAL -->
+
+<div class="total">
+Total:
+<span id="total">R$ 0,00</span>
+</div>
+
+<!-- FORM -->
+
+<div class="form-box">
+
+<h2>
+💳 Finalizar Pedido
+</h2>
+
+<form action="salvar.php" method="POST">
+
+<input type="hidden" name="itens" id="itens">
+
+<input type="hidden" name="total" id="totalInput">
+
+<input type="text"
+name="nome"
+placeholder="Nome Completo"
+required>
+
+<input type="text"
+name="cpf"
+placeholder="CPF"
+required>
+
+<input type="text"
+name="celular"
+placeholder="Celular / WhatsApp"
+required>
+
+<input type="text"
+name="endereco"
+placeholder="Endereço"
+required>
+
+<textarea
+name="observacoes"
+placeholder="Observações do pedido"></textarea>
+
+<select
+name="pagamento"
+id="pagamento"
+onchange="mostrarPagamento()">
+
+<option value="PIX">PIX</option>
+<option value="Cartão">Cartão</option>
+<option value="Dinheiro">Dinheiro</option>
+
+</select>
+
+<div
+class="pagamento-info"
+id="infoPagamento">
+
+📲 PIX:
+<strong>
+expressoburger@gmail.com
+</strong>
+
+</div>
+
+<button
+type="submit"
+class="finalizar">
+
+Confirmar Pedido ✅
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+let total = 0;
+let contador = 0;
+let itens = [];
+
+function adicionar(nome, preco){
+
+    total += preco;
+    contador++;
+
+    itens.push(nome);
+
+    document.getElementById('contador').innerText = contador;
+
+    document.getElementById('total').innerText =
+    'R$ ' + total.toFixed(2).replace('.', ',');
+
+    document.getElementById('itens').value =
+    itens.join(', ');
+
+    document.getElementById('totalInput').value = total;
+}
+
+function mostrarPagamento(){
+
+    let pagamento =
+    document.getElementById('pagamento').value;
+
+    let info =
+    document.getElementById('infoPagamento');
+
+    if(pagamento == "Cartão"){
+
+        info.innerHTML =
+        "💳 O entregador levará a maquininha.";
+
+    }
+
+    else if(pagamento == "Dinheiro"){
+
+        info.innerHTML =
+        "💵 O pagamento será realizado na entrega.";
+
+    }
+
+    else{
+
+        info.innerHTML =
+        "📲 PIX: <strong>expressoburger@gmail.com</strong>";
+
+    }
+}
+
+</script>
+
+</body>
+</html>
