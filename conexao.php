@@ -1,12 +1,12 @@
 <?php
 
-$host = "localhost";
+$host = "sql213.infinityfree.com";
 
-$usuario = "root";
+$usuario = "if0_41969549";
 
-$senha = "";
+$senha = "H6hnKYHtIumVg";
 
-$banco = "expresso_burger";
+$banco = "if0_41969549_expresso_burger";
 
 $conexao = new mysqli(
 $host,
