@@ -9,35 +9,95 @@ $cpf = $_POST['cpf'] ?? '';
 $celular = $_POST['celular'] ?? '';
 $endereco = $_POST['endereco'] ?? '';
 $pagamento = $_POST['pagamento'] ?? '';
-$itens = $_POST['itens'] ?? '';
 $total = $_POST['total'] ?? 0;
 $observacoes = $_POST['observacoes'] ?? '';
 
-/* SEGURANÇA */
+$itens = json_decode($_POST['itens'], true);
 
-$nome = mysqli_real_escape_string($conexao, $nome);
-$cpf = mysqli_real_escape_string($conexao, $cpf);
-$celular = mysqli_real_escape_string($conexao, $celular);
-$endereco = mysqli_real_escape_string($conexao, $endereco);
-$pagamento = mysqli_real_escape_string($conexao, $pagamento);
-$itens = mysqli_real_escape_string($conexao, $itens);
-$observacoes = mysqli_real_escape_string($conexao, $observacoes);
+if(
+empty($nome) ||
+empty($celular) ||
+empty($endereco)
+){
 
-$sql = "INSERT INTO pedidos
-(nome, cpf, celular, endereco, pagamento, itens, total, observacoes)
+die("Preencha todos os campos.");
 
-VALUES
+}
 
-('$nome',
-'$cpf',
-'$celular',
-'$endereco',
-'$pagamento',
-'$itens',
-'$total',
-'$observacoes')";
+/* CLIENTE */
 
-if($conexao->query($sql) === TRUE){
+$stmtCliente = $conexao->prepare("
+
+INSERT INTO clientes
+(nome, cpf, celular, endereco)
+
+VALUES (?, ?, ?, ?)
+
+");
+
+$stmtCliente->bind_param(
+"ssss",
+$nome,
+$cpf,
+$celular,
+$endereco
+);
+
+$stmtCliente->execute();
+
+$cliente_id = $conexao->insert_id;
+
+/* PEDIDO */
+
+$stmtPedido = $conexao->prepare("
+
+INSERT INTO pedidos
+(cliente_id, total, pagamento, observacoes)
+
+VALUES (?, ?, ?, ?)
+
+");
+
+$stmtPedido->bind_param(
+"idss",
+$cliente_id,
+$total,
+$pagamento,
+$observacoes
+);
+
+$stmtPedido->execute();
+
+$pedido_id = $conexao->insert_id;
+
+/* ITENS */
+
+$stmtItens = $conexao->prepare("
+
+INSERT INTO itens_pedido
+(pedido_id, nome_item, preco, quantidade)
+
+VALUES (?, ?, ?, ?)
+
+");
+
+foreach($itens as $item){
+
+$nomeItem = $item['nome'];
+$precoItem = $item['preco'];
+$quantidade = $item['quantidade'];
+
+$stmtItens->bind_param(
+"isdi",
+$pedido_id,
+$nomeItem,
+$precoItem,
+$quantidade
+);
+
+$stmtItens->execute();
+
+}
 
 ?>
 
@@ -47,7 +107,8 @@ if($conexao->query($sql) === TRUE){
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Pedido Confirmado</title>
 
@@ -61,11 +122,11 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#111,#1f1f1f);
-min-height:100vh;
+background:#111;
 display:flex;
 justify-content:center;
 align-items:center;
+min-height:100vh;
 padding:20px;
 color:white;
 }
@@ -74,23 +135,15 @@ color:white;
 background:#1d1d1d;
 padding:40px;
 border-radius:25px;
+max-width:550px;
 width:100%;
-max-width:500px;
 text-align:center;
-box-shadow:0 0 25px rgba(255,153,0,0.4);
-border:1px solid #2b2b2b;
+border:1px solid #333;
 }
 
 h1{
 color:#ff9900;
-margin-bottom:15px;
-font-size:34px;
-}
-
-.sub{
-color:#ddd;
-margin-bottom:25px;
-line-height:1.5;
+margin-bottom:20px;
 }
 
 .info{
@@ -104,44 +157,24 @@ text-align:left;
 .info p{
 margin:12px 0;
 line-height:1.5;
-word-break:break-word;
-}
-
-strong{
-color:#ffcc80;
 }
 
 .total{
-font-size:28px;
+font-size:30px;
 color:#00e676;
-font-weight:bold;
 margin-top:20px;
-}
-
-.msg{
-margin-top:25px;
-background:#222;
-padding:18px;
-border-radius:15px;
-line-height:1.6;
-color:#ffcc80;
+font-weight:bold;
 }
 
 .btn{
 display:inline-block;
 margin-top:30px;
-padding:15px 28px;
+padding:15px 25px;
 background:linear-gradient(90deg,#ff3c00,#ff9900);
 color:white;
 text-decoration:none;
-border-radius:14px;
+border-radius:12px;
 font-weight:bold;
-font-size:16px;
-transition:0.3s;
-}
-
-.btn:hover{
-transform:scale(1.05);
 }
 
 </style>
@@ -156,60 +189,44 @@ transform:scale(1.05);
 🍔 Pedido Confirmado!
 </h1>
 
-<p class="sub">
-Seu pedido foi enviado com sucesso para o Expresso Burger.
-</p>
-
 <div class="info">
 
 <p>
-<strong>👤 Cliente:</strong>
-<?php echo $nome; ?>
+<strong>Cliente:</strong>
+<?= htmlspecialchars($nome) ?>
 </p>
 
 <p>
-<strong>📱 WhatsApp:</strong>
-<?php echo $celular; ?>
+<strong>WhatsApp:</strong>
+<?= htmlspecialchars($celular) ?>
 </p>
 
 <p>
-<strong>📍 Endereço:</strong>
-<?php echo $endereco; ?>
+<strong>Endereço:</strong>
+<?= htmlspecialchars($endereco) ?>
 </p>
 
 <p>
-<strong>🍟 Pedido:</strong>
-<?php echo $itens; ?>
+<strong>Pagamento:</strong>
+<?= htmlspecialchars($pagamento) ?>
 </p>
 
 <p>
-<strong>📝 Observações:</strong>
-<?php echo $observacoes; ?>
+<strong>Observações:</strong>
+<?= htmlspecialchars($observacoes) ?>
 </p>
 
-<p>
-<strong>💳 Pagamento:</strong>
-<?php echo $pagamento; ?>
-</p>
+</div>
 
 <div class="total">
 
-R$ <?php echo number_format((float)$total,2,',','.'); ?>
+R$
+<?= number_format((float)$total,2,',','.') ?>
 
 </div>
 
-</div>
-
-<div class="msg">
-
-📲 Nosso entregador entrará em contato pelo WhatsApp informado.<br><br>
-
-🔥 Obrigado por pedir no Expresso Burger!
-
-</div>
-
-<a href="index.html" class="btn">
-🍔 Fazer outro pedido
+<a href="index.php" class="btn">
+Fazer Outro Pedido
 </a>
 
 </div>
@@ -221,19 +238,7 @@ R$ <?php echo number_format((float)$total,2,',','.'); ?>
 
 }else{
 
-echo "
-
-<h2 style='color:red;text-align:center;margin-top:40px;'>
-Erro ao salvar pedido.
-</h2>
-
-<p style='text-align:center;color:white;'>
-".$conexao->error."
-</p>
-
-";
-
-}
+echo "Erro ao processar pedido.";
 
 }
 
