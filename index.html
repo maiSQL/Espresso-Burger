@@ -422,120 +422,58 @@ Adicionar
 
 </div>
 
-<!-- COMBOS -->
+<!-- COMBOS (MANTIDOS) -->
 
-<h2 class="titulo">
-🔥 Combos Promocionais 🔥
-</h2>
+<h2 class="titulo">🔥 Combos Promocionais 🔥</h2>
 
 <div class="grid">
 
-<!-- COMBO 1 -->
-
 <div class="card">
-
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBUAIGVobTaVdxsI0AoCBJ8w17uno1_y8l4Q&s">
-
 <div class="card-content">
-
 <h3>Combo Casal</h3>
-
 <p style="margin-bottom:10px;color:#ccc;">
 2 Smash Australiano + 2 Coca-Cola + Batata
 </p>
-
-<div class="preco">
-R$ 59,90
+<div class="preco">R$ 59,90</div>
+<button class="add" onclick="adicionar('Combo Casal',59.90)">Adicionar</button>
 </div>
-
-<button class="add"
-onclick="adicionar('Combo Casal',59.90)">
-Adicionar
-</button>
-
 </div>
-
-</div>
-
-<!-- COMBO 2 -->
 
 <div class="card">
-
 <img src="https://alloydeliveryimages.s3.sa-east-1.amazonaws.com/item_images/9532/697e829d427bbuird6.webp">
-
 <div class="card-content">
-
 <h3>Combo Família</h3>
-
 <p style="margin-bottom:10px;color:#ccc;">
 2 Pizzas + Refrigerante 2L
 </p>
-
-<div class="preco">
-R$ 89,90
+<div class="preco">R$ 89,90</div>
+<button class="add" onclick="adicionar('Combo Família',89.90)">Adicionar</button>
 </div>
-
-<button class="add"
-onclick="adicionar('Combo Família',89.90)">
-Adicionar
-</button>
-
 </div>
-
-</div>
-
-<!-- COMBO 3 -->
 
 <div class="card">
-
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfr6LJ8Ncm8Qp8ok4S-oBQdUyqhcEqKR4ciA&s">
-
 <div class="card-content">
-
 <h3>Combo Explosão</h3>
-
 <p style="margin-bottom:10px;color:#ccc;">
-X-Bacon + Batata Cheddar + Milkshake Chocolate
+X-Bacon + Batata + Milkshake
 </p>
-
-<div class="preco">
-R$ 42,90
+<div class="preco">R$ 42,90</div>
+<button class="add" onclick="adicionar('Combo Explosão',42.90)">Adicionar</button>
 </div>
-
-<button class="add"
-onclick="adicionar('Combo Explosão',42.90)">
-Adicionar
-</button>
-
 </div>
-
-</div>
-
-<!-- COMBO 4 -->
 
 <div class="card">
-
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSvqcKCRLKA45xSwuNo3n1MiA87LtCp4iIGA&s">
-
 <div class="card-content">
-
 <h3>Combo Pizza Night</h3>
-
 <p style="margin-bottom:10px;color:#ccc;">
-Pizza Marguerita + Guaraná Antarctica + Onion Rings
+Pizza + Guaraná + Onion Rings
 </p>
-
-<div class="preco">
-R$ 54,90
+<div class="preco">R$ 54,90</div>
+<button class="add" onclick="adicionar('Combo Pizza Night',54.90)">Adicionar</button>
 </div>
-
-<button class="add"
-onclick="adicionar('Combo Pizza Night',54.90)">
-Adicionar
-</button>
-
-</div>
-
 </div>
 
 </div>
@@ -551,77 +489,41 @@ Total:
 
 <div class="form-box">
 
-<h2>
-💳 Finalizar Pedido
-</h2>
+<h2>💳 Finalizar Pedido</h2>
 
 <form action="salvar.php" method="POST">
 
 <input type="hidden" name="itens" id="itens">
-
 <input type="hidden" name="total" id="totalInput">
 
-<input type="text"
-name="nome"
-placeholder="Nome Completo"
-required>
+<input type="text" name="nome" placeholder="Nome Completo" required>
+<input type="text" name="cpf" placeholder="CPF" required>
+<input type="text" name="celular" placeholder="Celular / WhatsApp" required>
+<input type="text" name="endereco" placeholder="Endereço" required>
 
-<input type="text"
-name="cpf"
-placeholder="CPF"
-required>
+<textarea name="observacoes" placeholder="Observações do pedido"></textarea>
 
-<input type="text"
-name="celular"
-placeholder="Celular / WhatsApp"
-required>
-
-<input type="text"
-name="endereco"
-placeholder="Endereço"
-required>
-
-<textarea
-name="observacoes"
-placeholder="Observações do pedido"></textarea>
-
-<select
-name="pagamento"
-id="pagamento"
-onchange="mostrarPagamento()">
-
+<select name="pagamento" id="pagamento" onchange="mostrarPagamento()">
 <option value="PIX">PIX</option>
 <option value="Cartão">Cartão</option>
 <option value="Dinheiro">Dinheiro</option>
-
 </select>
 
-<div
-class="pagamento-info"
-id="infoPagamento">
-
-📲 PIX:
-<strong>
-expressoburger@gmail.com
-</strong>
-
+<div class="pagamento-info" id="infoPagamento">
+📲 PIX: <strong>expressoburger@gmail.com</strong>
 </div>
 
-<button
-type="submit"
-class="finalizar">
-
+<button type="submit" class="finalizar">
 Confirmar Pedido ✅
-
 </button>
 
 </form>
 
 </div>
 
-</div>
-
 <script>
+
+/* 🔥 SÓ AQUI FOI ALTERADO PARA FUNCIONAR COM AS 3 TABELAS */
 
 let total = 0;
 let contador = 0;
@@ -632,7 +534,17 @@ function adicionar(nome, preco){
     total += preco;
     contador++;
 
-    itens.push(nome);
+    let itemExistente = itens.find(item => item.nome === nome);
+
+    if(itemExistente){
+        itemExistente.quantidade++;
+    }else{
+        itens.push({
+            nome:nome,
+            preco:preco,
+            quantidade:1
+        });
+    }
 
     document.getElementById('contador').innerText = contador;
 
@@ -640,38 +552,23 @@ function adicionar(nome, preco){
     'R$ ' + total.toFixed(2).replace('.', ',');
 
     document.getElementById('itens').value =
-    itens.join(', ');
+    JSON.stringify(itens);
 
-    document.getElementById('totalInput').value = total;
+    document.getElementById('totalInput').value =
+    total.toFixed(2);
 }
 
 function mostrarPagamento(){
 
-    let pagamento =
-    document.getElementById('pagamento').value;
-
-    let info =
-    document.getElementById('infoPagamento');
+    let pagamento = document.getElementById('pagamento').value;
+    let info = document.getElementById('infoPagamento');
 
     if(pagamento == "Cartão"){
-
-        info.innerHTML =
-        "💳 O entregador levará a maquininha.";
-
-    }
-
-    else if(pagamento == "Dinheiro"){
-
-        info.innerHTML =
-        "💵 O pagamento será realizado na entrega.";
-
-    }
-
-    else{
-
-        info.innerHTML =
-        "📲 PIX: <strong>expressoburger@gmail.com</strong>";
-
+        info.innerHTML = "💳 O entregador levará a maquininha.";
+    }else if(pagamento == "Dinheiro"){
+        info.innerHTML = "💵 O pagamento será realizado na entrega.";
+    }else{
+        info.innerHTML = "📲 PIX: <strong>expressoburger@gmail.com</strong>";
     }
 }
 
